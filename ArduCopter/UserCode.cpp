@@ -1,7 +1,5 @@
 #include "Copter.h"
 
-
-
 #ifdef USERHOOK_INIT
 void Copter::userhook_init()
 {
@@ -12,6 +10,8 @@ void Copter::userhook_init()
     ips_bytes = 0;
     s16_US_HEIGHT = 156;
     optflow.init();
+    pid_posx.init(pid_pos_x_param);
+    pid_posy.init(pid_pos_y_param);
     
 }
 #endif
@@ -37,12 +37,12 @@ void Copter::userhook_FastLoop()
                 // valid frame
                 ips_data[0] = (ips_char[1]-0x30)*100 + (ips_char[2]-0x30)*10 + (ips_char[3]-0x30); //pos_x
                 ips_data[1] = (ips_char[5]-0x30)*100 + (ips_char[6]-0x30)*10 + (ips_char[7]-0x30); //pos_y
-                ips_data[2] = (ips_char[9]-0x30)*100 + (ips_char[10]-0x30)*10 + (ips_char[11]-0x30); //pos_z
-                ips_data[3] = AP_HAL::millis()-ips_delay_ms;
-                hal.uartF->printf("%d,%d,%d,%d",ips_data[0],ips_data[1],ips_data[2],ips_data[3]);
+                th_roll = ips_data[0];
+                th_pitch = ips_data[1];
+                //hal.uartF->printf("%d,%d,%d,%d",ips_data[0],ips_data[1],ips_data[2],ips_data[3]);
                 
             }
-            hal.uartF->printf("\r\n");
+            //hal.uartF->printf("\r\n");
             c_buff = 0;
             c_state = 0;
         }

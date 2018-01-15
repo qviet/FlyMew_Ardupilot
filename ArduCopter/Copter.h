@@ -24,6 +24,7 @@
 #include <cmath>
 #include <stdio.h>
 #include <stdarg.h>
+#include "pid.h"
 
 #include <AP_HAL/AP_HAL.h>
 

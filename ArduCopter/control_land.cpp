@@ -8,6 +8,7 @@ static bool land_pause;
 // land_init - initialise land controller
 bool Copter::land_init(bool ignore_checks)
 {
+    init_disarm_motors();
     // check if we have GPS and decide which LAND we're going to do
     land_with_gps = position_ok();
     if (land_with_gps) {
