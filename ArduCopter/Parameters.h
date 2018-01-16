@@ -45,6 +45,8 @@ public:
     //
     //
     enum {
+        k_param_scale_roll, // new parameter 
+        k_param_scale_pitch,
         // Layout version number, always key zero.
         //
         k_param_format_version = 0,
@@ -371,6 +373,8 @@ public:
         // 511: reserved
     };
 
+    AP_Int8         scale_roll;
+    AP_Int8         scale_pitch;
     AP_Int16        format_version;
     AP_Int8         software_type;
 

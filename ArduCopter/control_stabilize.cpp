@@ -34,9 +34,7 @@ bool Copter::stabilize_init(bool ignore_checks)
 // should be called at 100hz or more
 void Copter::stabilize_run()
 {
-    float  error_x, error_y;
     int joystick_roll, joystick_pitch;
-    int scale_roll, scale_pitch;
     AltHoldModeState althold_state;
     float takeoff_climb_rate = 0.0f;
     float target_roll, target_pitch;
@@ -51,7 +49,7 @@ void Copter::stabilize_run()
 
     // joystick_roll_balance: 1504 range: 1016->2022
     // joystick_pitch_balance: 1504 range: 2008->2016
-    if (joystick_roll>1500 && joystick_roll >1510 || joystick_pitch>1500 && joystick_pitch <1510)
+    if ((joystick_roll>1500 && joystick_roll >1510) || (joystick_pitch>1500 && joystick_pitch <1510))
     {
         joystick_roll = 1016+1006*th_roll/640;
         joystick_pitch = 2008-1005*th_pitch/480;
