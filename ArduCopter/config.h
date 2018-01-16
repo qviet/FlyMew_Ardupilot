@@ -30,8 +30,12 @@
 
 
 
-#ifndef MY_NEW_PARAMETER_DEFAULT
-#define MY_NEW_PARAMETER_DEFAULT      2     // default value for my new parameter
+#ifndef SCALE_PITCH_DEFAULT     
+#define SCALE_PITCH_DEFAULT      2     // default value for my new parameter
+#endif
+
+#ifndef SCALE_ROLL_DEFAULT     
+#define SCALE_ROLL_DEFAULT      2     // default value for my new parameter
 #endif
 
 //////////////////////////////////////////////////////////////////////////////

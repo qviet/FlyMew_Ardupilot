@@ -34,10 +34,11 @@ bool Copter::stabilize_init(bool ignore_checks)
 // should be called at 100hz or more
 void Copter::stabilize_run()
 {
-    int joystick_roll, joystick_pitch;
+    int joystick_roll=0, joystick_pitch=0;
+    int joystick_roll_scale=0, joystick_pitch_scale=0;
     AltHoldModeState althold_state;
     float takeoff_climb_rate = 0.0f;
-    float target_roll, target_pitch;
+    float target_roll=0, target_pitch=0;
     // initialize vertical speeds and acceleration
     pos_control->set_speed_z(-g.pilot_velocity_z_max, g.pilot_velocity_z_max);
     pos_control->set_accel_z(g.pilot_accel_z);
@@ -48,21 +49,27 @@ void Copter::stabilize_run()
     joystick_pitch = channel_pitch->get_control_in();
 
     // joystick_roll_balance: 1504 range: 1016->2022
-    // joystick_pitch_balance: 1504 range: 2008->2016
-    if ((joystick_roll>1500 && joystick_roll >1510) || (joystick_pitch>1500 && joystick_pitch <1510))
+    // joystick_pitch_balance: 1504 range: 1008->2016
+    // scale from image processing to joystick
+    if ((joystick_roll>1498 && joystick_roll <1512) && (joystick_pitch>1498 && joystick_pitch <1512))
     {
-        joystick_roll = 1016+1006*th_roll/640;
-        joystick_pitch = 2008-1005*th_pitch/480;
+        joystick_roll_scale = 1016+1006*th_roll/640;
+        joystick_pitch_scale = 2008-1005*th_pitch/480;
     }
-    if (joystick_roll>1485&&joystick_roll<1550&&joystick_pitch<1547&&joystick_pitch>1465)
+    // round
+    if (joystick_roll_scale>1485&&joystick_roll_scale<1550&&joystick_pitch_scale<1547&&joystick_pitch_scale>1465)
     {
-        joystick_roll=1504;
-        joystick_pitch=1504;
+        joystick_roll_scale=1504;
+        joystick_pitch_scale=1504;
     }
     // get pilot desired lean angles
     get_pilot_desired_lean_angles(joystick_roll, joystick_pitch, target_roll, target_pitch, attitude_control->get_althold_lean_angle_max());
-    target_roll = target_roll/2;
-    target_pitch = target_pitch/2;
+    // 
+    if ((joystick_roll>1498 && joystick_roll <1512) && (joystick_pitch>1498 && joystick_pitch <1512))
+    {    
+        target_roll = target_roll/(float)(g.scale_roll);
+        target_pitch = target_pitch/(float)(g.scale_pitch);
+    }
     // get pilot's desired yaw rate
     float target_yaw_rate = get_pilot_desired_yaw_rate(channel_yaw->get_control_in());
 

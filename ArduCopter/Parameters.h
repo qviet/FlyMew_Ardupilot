@@ -45,8 +45,8 @@ public:
     //
     //
     enum {
-        k_param_scale_roll, // new parameter 
-        k_param_scale_pitch,
+        // k_param_scale_roll, // new parameter 
+        // k_param_scale_pitch,
         // Layout version number, always key zero.
         //
         k_param_format_version = 0,
@@ -366,6 +366,8 @@ public:
         k_param_autotune_min_d, // 251
         k_param_arming, // 252  - AP_Arming
         k_param_DataFlash = 253, // 253 - Logging Group
+        k_param_scale_roll, // new parameter 
+        k_param_scale_pitch,
 
         // 254,255: reserved
 
@@ -373,8 +375,8 @@ public:
         // 511: reserved
     };
 
-    AP_Int8         scale_roll;
-    AP_Int8         scale_pitch;
+    AP_Float        scale_roll;
+    AP_Float        scale_pitch;
     AP_Int16        format_version;
     AP_Int8         software_type;
 

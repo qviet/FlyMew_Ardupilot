@@ -19,6 +19,12 @@ void Copter::userhook_init()
 #ifdef USERHOOK_FASTLOOP
 void Copter::userhook_FastLoop()
 {
+    
+    // if(g.scale_roll == 4.0f)
+    // {
+    //     //copter.gcs_send_text_fmt(MAV_SEVERITY_INFO,"scale_roll: %.2f",g.scale_roll);
+    //     cliSerial->printf("scale_roll: %.2f",(float)g.scale_roll);
+    // }
     // put your 100Hz code here
     // uartF: serial5, baud 115200
 //================================IPS_POSITION====================================//
